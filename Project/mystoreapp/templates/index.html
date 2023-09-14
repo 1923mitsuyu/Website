@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <main class="container">
+         {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="title" style="text-align:center; font-family:cursive;">
+            <h1>Top Selling Books</h1>
+        </div>
+    <div class = 'row'>
+        {% for textbook in textbooks %}
+        {% if textbook.id < 6 or textbook.id == 18 %}
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 d-flex mb-2">
+                <article class="card">
+                    <img src="{{ url_for('static', filename='image/' ~ textbook.image) }}" style="height: 27rem;" class="card-img-top" alt="{{ textbook.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ textbook.name }}</h5>
+                        <p class="card-text">${{ textbook.price }}</p>
+                        <a href="{{ url_for('main.view_textbook', textbook_id = textbook.id) }}"><button type="button" class="btn btn-outline-dark">See Details</button></a>
+                    </div>
+                </article>
+            </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
+    </main>
+{% endblock %}
+

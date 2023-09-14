@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{% for textbook in textbooks %}
+    <main class="container">
+            <div class="card mb-3" style="max-width: 1000px; margin-top:0.5cm;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{ url_for('static', filename='image/' ~ textbook.image) }}" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ textbook.name }}</h5>
+                            <p>Price: ${{ textbook.price }}</p>
+                                {% if textbook.id < 7 %}
+                                <p>Category: Top Salling</p>
+                                {% elif textbook.id > 6 and textbook.id < 11 %}
+                                <p>Category: Conversation</p>
+                                {% elif textbook.id == 11 or textbook.id == 12 %}
+                                <p>Category: Examination</p>
+                                {% elif textbook.id > 12 %}
+                                <p>Category: Grammer</p>
+                                {% endif %}
+                                <a href="{{ url_for('main.order', textbook_id=textbook.id) }}"><button type="button" class="btn btn-dark" style="margin-bottom:0.5cm;">ADD TO CART</button></a>
+                            <p class="card-text">{{ textbook.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+{% endfor %}
+{% endblock %}
